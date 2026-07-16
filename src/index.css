@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=SF+Pro+Display:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* FIX 1: Lock the body to prevent the "unbalanced" shift and pull-to-refresh bounce */
+html, body {
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior-y: none;
+  width: 100%;
+}
+
+body {
+  font-family: 'Poppins', 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 0.875rem; 
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  
+  .scrollbar-thumb-gray-400 {
+    scrollbar-color: #9ca3af transparent;
+  }
+  
+  .scrollbar-track-transparent {
+    scrollbar-color: #9ca3af transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px; 
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #9ca3af;
+    border-radius: 3px; 
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: #6b7280;
+  }
+
+  .text-crisp {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+  
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  .focus-visible:focus {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+  }
+  
+  /* FIX 2: Better mobile viewport handling using modern CSS units */
+  .h-screen {
+    height: 100dvh; /* Best for Chrome 2026 */
+  }
+
+  /* FIX 3: Ensure the chat area is the only thing that scrolls */
+  .chat-scroll-container {
+    overflow-y: auto;
+    height: 100%;
+    -webkit-overflow-scrolling: touch; /* Smooth momentum scrolling for iOS/Chrome */
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+
+  @media screen and (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+      font-size: 16px !important; /* Forces 16px on mobile to prevent Chrome's auto-zoom on focus */
+    }
+  }
+  
+  .message-text {
+    font-family: 'Poppins', 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-weight: 500;
+    line-height: 1.7; 
+    letter-spacing: 0.02em;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+  
+  .message-content {
+    line-height: 1.7;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .message-content h3 {
+    font-weight: 700;
+    font-size: 1.1em;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    color: #10b981;
+  }
+  
+  .message-content h3:first-child {
+    margin-top: 0;
+  }
+  
+  .message-content > div {
+    margin-bottom: 0.5rem;
+  }
+  
+  .message-content > div:last-child {
+    margin-bottom: 0;
+  }
+  
+  .enhanced-text {
+    font-family: 'Poppins', 'SF Pro Display', 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+    line-height: 1.8;
+    letter-spacing: 0.015em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .beautiful-header {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+}
