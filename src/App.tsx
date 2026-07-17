@@ -11,6 +11,8 @@ import { sendMessage } from './services/geminiApi';
 import { clearConversationMemory } from './utils/memoryUtils';
 import { Message, Conversation, AppSettings } from './types';
 import { checkQuota, recordUsage } from './subscriptions/services/api';
+import { useSubscriptionContext } from './subscriptions/providers/SubscriptionProvider';
+import { getAllowedModels } from './subscriptions/utils/quota';
 
 export default function App() {
   const [messages, setMessages] = useLocalStorage<Message[]>('greenai-messages', []);
@@ -41,6 +43,7 @@ export default function App() {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const { user, signOut } = useAuth();
   const { showAuthModal } = useAuthModal();
+  const { plan } = useSubscriptionContext();
   const isAuthenticated = !!user;
 
   const handleAuthRequired = useCallback((feature: string) => {
@@ -160,6 +163,14 @@ export default function App() {
         }
       } catch {
         // Allow sending if quota check fails
+      }
+
+      const allowedModels = getAllowedModels(plan?.slug);
+      if (!allowedModels.includes(settings.currentModel)) {
+        const highest = allowedModels[allowedModels.length - 1];
+        alert(`Your current plan does not support the ${settings.currentModel.toUpperCase()} model. Switching to ${highest.toUpperCase()}.`);
+        handleSettingsChange({ ...settings, currentModel: highest });
+        return;
       }
     }
 
@@ -374,6 +385,7 @@ export default function App() {
         onSettingsChange={handleSettingsChange}
         onClearMemory={handleClearMemory}
         darkMode={settings.darkMode}
+        planSlug={plan?.slug}
       />
     </div>
   );

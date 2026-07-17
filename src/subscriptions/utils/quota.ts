@@ -1,4 +1,15 @@
 import type { Plan } from '../types';
+import type { AIModel } from '../../types';
+
+const PLAN_MODEL_MAP: Record<string, AIModel[]> = {
+  free: ['gx-1.5'],
+  pro: ['gx-1.5', 'gx-2.0'],
+  max: ['gx-1.5', 'gx-2.0', 'gx-3.0'],
+};
+
+export function getAllowedModels(planSlug?: string | null): AIModel[] {
+  return PLAN_MODEL_MAP[planSlug ?? 'free'] ?? PLAN_MODEL_MAP.free;
+}
 
 export function isUnlimited(value: number): boolean {
   return value === -1;
