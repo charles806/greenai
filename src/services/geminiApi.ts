@@ -88,8 +88,8 @@ const retryWithBackoff = async <T>(
 const getGeminiModelName = (internalModel: string): string => {
   const modelMap: Record<string, string> = {
     'gx-1.5': 'gemini-2.5-flash',
-    'gx-2.0': 'gemini-2.5-flash',
-    'gx-3.0': 'gemini-2.5-flash'
+    'gx-2.0': 'gemini-3.5-flash',
+    'gx-3.0': 'gemini-3.1-flash-lite'
   };
   return modelMap[internalModel] || 'gemini-2.5-flash';
 };

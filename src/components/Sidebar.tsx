@@ -298,6 +298,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
               )}
 
+              <Link
+                to="/pricing"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg w-full text-left transition-colors touch-manipulation ${
+                  darkMode ? 'hover:bg-white/10' : 'hover:bg-gray-100'
+                }`}
+                style={{ color: darkMode ? '#ececec' : '#374151', textDecoration: 'none' }}
+              >
+                <span style={{ fontSize: '13.5px' }}>Pricing</span>
+              </Link>
+
+              <Link
+                to="/billing"
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg w-full text-left transition-colors touch-manipulation ${
+                  darkMode ? 'hover:bg-white/10' : 'hover:bg-gray-100'
+                }`}
+                style={{ color: darkMode ? '#ececec' : '#374151', textDecoration: 'none' }}
+              >
+                <span style={{ fontSize: '13.5px' }}>Billing</span>
+              </Link>
+
               <button
                 onClick={onSignOut}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg w-full text-left transition-colors touch-manipulation ${

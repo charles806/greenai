@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Paperclip, X, FileText, ArrowUp, Square, Mic, MicOff, Globe } from 'lucide-react';
 import * as pdfjsLib from 'pdfjs-dist';
+import { validateFile } from '../subscriptions/utils/upload';
 
 // PDF worker setup
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -88,6 +89,11 @@ export const ChatInput: React.FC<ChatInputProps> = ({
     setIsProcessingFiles(true);
     const results: UploadedFile[] = [];
     for (const file of Array.from(files)) {
+      const validation = validateFile(file);
+      if (!validation.valid) {
+        alert(validation.error);
+        continue;
+      }
       try {
         if (file.type.startsWith('image/')) {
           results.push({ file, type: 'image', preview: await readAsDataURL(file) });

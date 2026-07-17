@@ -10,6 +10,7 @@ import { useAuthModal } from './auth/providers/AuthModalProvider';
 import { sendMessage } from './services/geminiApi';
 import { clearConversationMemory } from './utils/memoryUtils';
 import { Message, Conversation, AppSettings } from './types';
+import { checkQuota, recordUsage } from './subscriptions/services/api';
 
 export default function App() {
   const [messages, setMessages] = useLocalStorage<Message[]>('greenai-messages', []);
@@ -150,6 +151,18 @@ export default function App() {
   const handleSendMessage = async (text: string, files?: any[], webSearch?: boolean) => {
     if (isProcessing) return;
 
+    if (isAuthenticated) {
+      try {
+        const quota = await checkQuota('chat');
+        if (!quota.allowed) {
+          alert(`You've used all your daily messages. Upgrade to Pro for unlimited access.`);
+          return;
+        }
+      } catch {
+        // Allow sending if quota check fails
+      }
+    }
+
     setIsProcessing(true);
     setIsTyping(true);
 
@@ -187,6 +200,10 @@ export default function App() {
       };
 
       setMessages([...newMessages, aiMessage]);
+
+      if (isAuthenticated) {
+        recordUsage('chat_message', { model: settings.currentModel, mode: settings.currentMode }).catch(() => {});
+      }
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
