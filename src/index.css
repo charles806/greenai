@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=SF+Pro+Display:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 /* FIX 1: Lock the body to prevent the "unbalanced" shift and pull-to-refresh bounce */
-html, body {
+html, body, #root {
   height: 100dvh;
   overflow: hidden;
   overscroll-behavior-y: none;
